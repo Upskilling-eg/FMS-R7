@@ -1,0 +1,30 @@
+.auth-container{
+    background-image: url('../src/assets/images/auth-bg.png');
+    background-size: cover;
+    background-position: center center;
+}
+.bg-overlay{
+    background: linear-gradient(45deg,rgba(55, 140, 47, 0.6),rgba(0, 0, 0, 0.6));
+}
+
+.sidebar-cont .ps-sidebar-container{
+   background-color: rgba(31, 38, 62, 1);
+   height:100vh;
+}
+.sidebar-cont  .ps-menu-button{
+    color: #fff !important;
+}
+.sidebar-cont  .ps-menu-button:hover{
+    background-color: rgba(0, 146, 77, 0.1) !important;
+    border-left:4px solid rgba(0, 146, 77, 1)
+}
+
+.sidebar-cont  .sidebar-logo a{
+    padding: 0 !important;
+
+}
+.sidebar-cont  .sidebar-logo a:hover{
+    background-color: transparent !important;
+    border:none
+
+}
