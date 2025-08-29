@@ -24,19 +24,6 @@ import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/Protected
 import UsersList from "./modules/Users/components/UsersList/UsersList";
 
 function App() {
-  //move then improve
-
-  const [loginData, setLoginData] = useState(null);
-
-  let saveLoginData = () => {
-    let encodedToken = localStorage.getItem("token");
-    let decodedToken = jwtDecode(encodedToken);
-    setLoginData(decodedToken);
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) saveLoginData();
-  }, []);
 
   const routes = createBrowserRouter([
     {
@@ -46,11 +33,11 @@ function App() {
       children: [
         {
           index: true,
-          element: <Login saveLoginData={saveLoginData} />,
+          element: <Login/>,
         },
         {
           path: "login",
-          element: <Login saveLoginData={saveLoginData} />,
+          element: <Login/>,
         },
         {
           path: "register",
@@ -73,9 +60,9 @@ function App() {
     {
       path: "/dashboard",
       element: (
-        <ProtectedRoute loginData={loginData}>
-          {" "}
-          <MasterLayout loginData={loginData} />{" "}
+        <ProtectedRoute>
+         
+          <MasterLayout />
         </ProtectedRoute>
       ),
       errorElement: <NotFound />,

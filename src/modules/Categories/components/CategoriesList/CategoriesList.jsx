@@ -18,6 +18,9 @@ export default function CategoriesList() {
   } = useForm();
 
   const [catId, setCatId] = useState(0);
+  const [arrayOfPages, setArrayOfPages] = useState([])
+    const [nameValue, setNameValue] = useState("")
+
   //model delete
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -32,12 +35,13 @@ export default function CategoriesList() {
 
   const [categoriesList, setCategoriesList] = useState([]);
 
-  const getAllCategories = async (pageSize, pageNumber) => {
+  const getAllCategories = async (pageSize, pageNumber , name) => {
     try {
       let response = await axiosInstance.get(
         `${CATEGORIES_URLS.GET_CATEGORIES}`,
-        { params: { pageSize, pageNumber } }
+        { params: { pageSize, pageNumber,name } }
       );
+      setArrayOfPages(Array(response.data.totalNumberOfPages).fill().map((_,i)=>i+1)); 
       setCategoriesList(response.data.data);
     } catch (error) {
       console.log(error);
@@ -62,6 +66,10 @@ export default function CategoriesList() {
       console.log(error);
     }
   };
+  const getNameValue =(input)=>{
+     setNameValue(input.target.value);
+     getAllCategories(5,1,input.target.value)
+  }
 
   const deleteCategory = () => {
     try {
@@ -78,7 +86,7 @@ export default function CategoriesList() {
   };
 
   useEffect(() => {
-    getAllCategories(3, 1);
+    getAllCategories(5, 1,"");
   }, []);
 
   return (
@@ -137,6 +145,7 @@ export default function CategoriesList() {
         </button>
       </div>
       <div className="p-4">
+        <input type="text" placeholder="Search by Name ,,," className="form-control mb-3" onChange={getNameValue}/>
         <table className="table table-striped">
           <thead>
             <th>Name</th>
@@ -144,8 +153,10 @@ export default function CategoriesList() {
             <th>Actions</th>
           </thead>
           <tbody>
+            
             {categoriesList.length > 0 ? (
               categoriesList.map((item) => (
+              
                 <tr>
                   <td>{item.name}</td>
                   <td>{item.creationDate}</td>
@@ -162,12 +173,35 @@ export default function CategoriesList() {
                     ></i>
                   </td>
                 </tr>
+             
+                  
               ))
+                
             ) : (
               <NoData />
             )}
           </tbody>
+        
         </table>
+        {categoriesList.length > 0 ?
+           <nav aria-label="Page navigation example">
+  <ul className="pagination">
+    <li className="page-item">
+      <a className="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {arrayOfPages.map(pageNo=>   
+      <li onClick={()=> getAllCategories(5, pageNo)} className="page-item"><a className="page-link">{pageNo}</a></li>
+    )}
+
+    <li className="page-item">
+      <a className="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+                </nav>:''}
       </div>
     </>
   );

@@ -4,8 +4,7 @@ import Navbar from '../Navbar/Navbar'
 import Header from '../Header/Header'
 import { Outlet } from 'react-router-dom'
 
-export default function MasterLayout({loginData}) {
-  console.log(loginData);
+export default function MasterLayout() {
   
   return (
     <>
@@ -14,7 +13,7 @@ export default function MasterLayout({loginData}) {
         <Sidebar/>
       </div>
       <div className='w-100'>
-      <Navbar loginData={loginData}/>
+      <Navbar/>
       
         <Outlet/>
       </div>
